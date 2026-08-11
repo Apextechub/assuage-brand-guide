@@ -203,10 +203,12 @@ reads `process.env` at module scope.
 - Uploaded image names are restricted by pattern, which rules out path traversal.
 - Server functions are CSRF-protected by TanStack Start, which requires a
   matching `Origin`.
-- PBKDF2 at 210,000 iterations makes password verification deliberately slow,
-  which also rate-limits guessing. There is one shared password and no lockout;
-  if the firm needs per-person accounts or audit trails, that means a real user
-  store.
+- PBKDF2 runs at 100,000 iterations, which makes verification deliberately slow
+  and so rate-limits guessing. That is the **maximum Cloudflare Workers allows**
+  — its WebCrypto rejects anything higher outright — and is below OWASP's
+  recommended 210,000. Choose a long, random password: with a shared secret and
+  no lockout, password entropy is what actually carries this. If the firm needs
+  per-person accounts or an audit trail, that means a real user store.
 
 ---
 
