@@ -11,17 +11,22 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as CareersRouteImport } from './routes/careers'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as NewsRouteImport } from './routes/news'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminExportRouteImport } from './routes/admin.export'
 import { Route as InsightsIndexRouteImport } from './routes/insights.index'
 import { Route as InsightsSlugRouteImport } from './routes/insights.$slug'
 import { Route as PracticeAreasIndexRouteImport } from './routes/practice-areas.index'
 import { Route as PracticeAreasSlugRouteImport } from './routes/practice-areas.$slug'
 import { Route as TeamIndexRouteImport } from './routes/team.index'
 import { Route as TeamSlugRouteImport } from './routes/team.$slug'
+import { Route as AdminInsightsIdRouteImport } from './routes/admin.insights.$id'
+import { Route as AdminNewsIdRouteImport } from './routes/admin.news.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -31,6 +36,11 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CareersRoute = CareersRouteImport.update({
@@ -57,6 +67,16 @@ const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminExportRoute = AdminExportRouteImport.update({
+  id: '/export',
+  path: '/export',
+  getParentRoute: () => AdminRoute,
 } as any)
 const InsightsIndexRoute = InsightsIndexRouteImport.update({
   id: '/insights/',
@@ -88,21 +108,36 @@ const TeamSlugRoute = TeamSlugRouteImport.update({
   path: '/team/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminInsightsIdRoute = AdminInsightsIdRouteImport.update({
+  id: '/insights/$id',
+  path: '/insights/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminNewsIdRoute = AdminNewsIdRouteImport.update({
+  id: '/news/$id',
+  path: '/news/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRouteWithChildren
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
   '/news': typeof NewsRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
+  '/admin/export': typeof AdminExportRoute
   '/insights/$slug': typeof InsightsSlugRoute
   '/practice-areas/$slug': typeof PracticeAreasSlugRoute
   '/team/$slug': typeof TeamSlugRoute
+  '/admin/': typeof AdminIndexRoute
   '/insights/': typeof InsightsIndexRoute
   '/practice-areas/': typeof PracticeAreasIndexRoute
   '/team/': typeof TeamIndexRoute
+  '/admin/insights/$id': typeof AdminInsightsIdRoute
+  '/admin/news/$id': typeof AdminNewsIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -112,45 +147,59 @@ export interface FileRoutesByTo {
   '/news': typeof NewsRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
+  '/admin/export': typeof AdminExportRoute
   '/insights/$slug': typeof InsightsSlugRoute
   '/practice-areas/$slug': typeof PracticeAreasSlugRoute
   '/team/$slug': typeof TeamSlugRoute
+  '/admin': typeof AdminIndexRoute
   '/insights': typeof InsightsIndexRoute
   '/practice-areas': typeof PracticeAreasIndexRoute
   '/team': typeof TeamIndexRoute
+  '/admin/insights/$id': typeof AdminInsightsIdRoute
+  '/admin/news/$id': typeof AdminNewsIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRouteWithChildren
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
   '/news': typeof NewsRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
+  '/admin/export': typeof AdminExportRoute
   '/insights/$slug': typeof InsightsSlugRoute
   '/practice-areas/$slug': typeof PracticeAreasSlugRoute
   '/team/$slug': typeof TeamSlugRoute
+  '/admin/': typeof AdminIndexRoute
   '/insights/': typeof InsightsIndexRoute
   '/practice-areas/': typeof PracticeAreasIndexRoute
   '/team/': typeof TeamIndexRoute
+  '/admin/insights/$id': typeof AdminInsightsIdRoute
+  '/admin/news/$id': typeof AdminNewsIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/about'
+    | '/admin'
     | '/careers'
     | '/contact'
     | '/news'
     | '/privacy'
     | '/terms'
+    | '/admin/export'
     | '/insights/$slug'
     | '/practice-areas/$slug'
     | '/team/$slug'
+    | '/admin/'
     | '/insights/'
     | '/practice-areas/'
     | '/team/'
+    | '/admin/insights/$id'
+    | '/admin/news/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -160,32 +209,42 @@ export interface FileRouteTypes {
     | '/news'
     | '/privacy'
     | '/terms'
+    | '/admin/export'
     | '/insights/$slug'
     | '/practice-areas/$slug'
     | '/team/$slug'
+    | '/admin'
     | '/insights'
     | '/practice-areas'
     | '/team'
+    | '/admin/insights/$id'
+    | '/admin/news/$id'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/admin'
     | '/careers'
     | '/contact'
     | '/news'
     | '/privacy'
     | '/terms'
+    | '/admin/export'
     | '/insights/$slug'
     | '/practice-areas/$slug'
     | '/team/$slug'
+    | '/admin/'
     | '/insights/'
     | '/practice-areas/'
     | '/team/'
+    | '/admin/insights/$id'
+    | '/admin/news/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AdminRoute: typeof AdminRouteWithChildren
   CareersRoute: typeof CareersRoute
   ContactRoute: typeof ContactRoute
   NewsRoute: typeof NewsRoute
@@ -213,6 +272,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/careers': {
@@ -249,6 +315,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/terms'
       preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/export': {
+      id: '/admin/export'
+      path: '/export'
+      fullPath: '/admin/export'
+      preLoaderRoute: typeof AdminExportRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/insights/': {
       id: '/insights/'
@@ -292,12 +372,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TeamSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/insights/$id': {
+      id: '/admin/insights/$id'
+      path: '/insights/$id'
+      fullPath: '/admin/insights/$id'
+      preLoaderRoute: typeof AdminInsightsIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/news/$id': {
+      id: '/admin/news/$id'
+      path: '/news/$id'
+      fullPath: '/admin/news/$id'
+      preLoaderRoute: typeof AdminNewsIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
+
+interface AdminRouteChildren {
+  AdminExportRoute: typeof AdminExportRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+  AdminInsightsIdRoute: typeof AdminInsightsIdRoute
+  AdminNewsIdRoute: typeof AdminNewsIdRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminExportRoute: AdminExportRoute,
+  AdminIndexRoute: AdminIndexRoute,
+  AdminInsightsIdRoute: AdminInsightsIdRoute,
+  AdminNewsIdRoute: AdminNewsIdRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AdminRoute: AdminRouteWithChildren,
   CareersRoute: CareersRoute,
   ContactRoute: ContactRoute,
   NewsRoute: NewsRoute,
@@ -313,3 +424,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

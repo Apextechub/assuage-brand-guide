@@ -1,0 +1,26 @@
+# Local secrets for the content admin.
+#
+# Copy to .dev.vars (which is gitignored) and fill in. Wrangler and the Vite dev
+# server read this file; production uses `wrangler secret put` instead.
+#
+# See docs/content-admin.md for how to obtain each value.
+#
+# Single-quote every value. The password hash contains `$`, which the shell
+# would expand to nothing if this file were sourced unquoted. Wrangler strips
+# the quotes, so the same file works for both.
+
+# Encrypts the admin session cookie. Any random string of 32+ characters.
+# Generate one:  node -e "console.log(require('node:crypto').randomBytes(48).toString('base64url'))"
+ADMIN_SESSION_SECRET=''
+
+# Produced by:  node scripts/hash-password.mjs
+ADMIN_PASSWORD_HASH=''
+
+# GitHub fine-grained token with Contents: Read and write on the repository.
+GITHUB_TOKEN=''
+
+# Optional — these default to this repository and branch.
+# PUBLISH_REPO=Apextechub/assuage-brand-guide
+# PUBLISH_BRANCH=main
+# PUBLISH_AUTHOR_NAME=Assuage content admin
+# PUBLISH_AUTHOR_EMAIL=noreply@users.noreply.github.com

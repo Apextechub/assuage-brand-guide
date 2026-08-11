@@ -3,6 +3,7 @@ import {
   Outlet,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -117,18 +118,23 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  // The content admin at /admin is a tool, not a page of the site: it brings its
+  // own chrome and must not show the public header, footer or navigation.
+  const isAdmin = useRouterState({
+    select: (state) => state.location.pathname.startsWith("/admin"),
+  });
 
   return (
     <QueryClientProvider client={queryClient}>
       <a href="#main-content" className="skip-link">
         Skip to content
       </a>
-      <Header />
+      {!isAdmin && <Header />}
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <main id="main-content">
         <Outlet />
       </main>
-      <Footer />
+      {!isAdmin && <Footer />}
     </QueryClientProvider>
   );
 }

@@ -39,7 +39,8 @@ function NewsPage() {
             {sorted.map((item) => (
               <article
                 key={item.slug}
-                className="grid gap-3 border-b border-rule py-10 md:grid-cols-12 md:gap-8"
+                id={item.slug}
+                className="grid gap-3 border-b border-rule py-10 md:grid-cols-12 md:gap-8 scroll-mt-32"
               >
                 <p className="micro-label text-ink-soft md:col-span-3">
                   <time dateTime={item.date}>{formatNewsDate(item.date)}</time>

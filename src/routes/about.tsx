@@ -33,9 +33,9 @@ const differentiators = [
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About Us — Assuage Attorneys" },
+      { title: "About Us - Assuage Attorneys" },
       { name: "description", content: description },
-      { property: "og:title", content: "About Us — Assuage Attorneys" },
+      { property: "og:title", content: "About Us - Assuage Attorneys" },
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/about" },

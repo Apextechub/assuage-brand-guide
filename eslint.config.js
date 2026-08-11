@@ -6,7 +6,9 @@ import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  { ignores: ["dist", ".output", ".vinxi"] },
+  // src/data/*.data.ts is written by the content admin at /admin, byte for byte.
+  // Reformatting it would make every export produce a spurious diff.
+  { ignores: ["dist", ".output", ".vinxi", "src/data/*.data.ts"] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ["**/*.{ts,tsx}"],
