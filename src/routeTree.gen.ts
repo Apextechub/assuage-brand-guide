@@ -11,6 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as CareersRouteImport } from './routes/careers'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as NewsRouteImport } from './routes/news'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as InsightsIndexRouteImport } from './routes/insights.index'
+import { Route as InsightsSlugRouteImport } from './routes/insights.$slug'
 import { Route as PracticeAreasIndexRouteImport } from './routes/practice-areas.index'
 import { Route as PracticeAreasSlugRouteImport } from './routes/practice-areas.$slug'
 import { Route as TeamIndexRouteImport } from './routes/team.index'
@@ -24,6 +31,41 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareersRoute = CareersRouteImport.update({
+  id: '/careers',
+  path: '/careers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewsRoute = NewsRouteImport.update({
+  id: '/news',
+  path: '/news',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InsightsIndexRoute = InsightsIndexRouteImport.update({
+  id: '/insights/',
+  path: '/insights/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InsightsSlugRoute = InsightsSlugRouteImport.update({
+  id: '/insights/$slug',
+  path: '/insights/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PracticeAreasIndexRoute = PracticeAreasIndexRouteImport.update({
@@ -50,16 +92,30 @@ const TeamSlugRoute = TeamSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/careers': typeof CareersRoute
+  '/contact': typeof ContactRoute
+  '/news': typeof NewsRoute
+  '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
+  '/insights/$slug': typeof InsightsSlugRoute
   '/practice-areas/$slug': typeof PracticeAreasSlugRoute
   '/team/$slug': typeof TeamSlugRoute
+  '/insights/': typeof InsightsIndexRoute
   '/practice-areas/': typeof PracticeAreasIndexRoute
   '/team/': typeof TeamIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/careers': typeof CareersRoute
+  '/contact': typeof ContactRoute
+  '/news': typeof NewsRoute
+  '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
+  '/insights/$slug': typeof InsightsSlugRoute
   '/practice-areas/$slug': typeof PracticeAreasSlugRoute
   '/team/$slug': typeof TeamSlugRoute
+  '/insights': typeof InsightsIndexRoute
   '/practice-areas': typeof PracticeAreasIndexRoute
   '/team': typeof TeamIndexRoute
 }
@@ -67,8 +123,15 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/careers': typeof CareersRoute
+  '/contact': typeof ContactRoute
+  '/news': typeof NewsRoute
+  '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
+  '/insights/$slug': typeof InsightsSlugRoute
   '/practice-areas/$slug': typeof PracticeAreasSlugRoute
   '/team/$slug': typeof TeamSlugRoute
+  '/insights/': typeof InsightsIndexRoute
   '/practice-areas/': typeof PracticeAreasIndexRoute
   '/team/': typeof TeamIndexRoute
 }
@@ -77,24 +140,45 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/careers'
+    | '/contact'
+    | '/news'
+    | '/privacy'
+    | '/terms'
+    | '/insights/$slug'
     | '/practice-areas/$slug'
     | '/team/$slug'
+    | '/insights/'
     | '/practice-areas/'
     | '/team/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
+    | '/careers'
+    | '/contact'
+    | '/news'
+    | '/privacy'
+    | '/terms'
+    | '/insights/$slug'
     | '/practice-areas/$slug'
     | '/team/$slug'
+    | '/insights'
     | '/practice-areas'
     | '/team'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/careers'
+    | '/contact'
+    | '/news'
+    | '/privacy'
+    | '/terms'
+    | '/insights/$slug'
     | '/practice-areas/$slug'
     | '/team/$slug'
+    | '/insights/'
     | '/practice-areas/'
     | '/team/'
   fileRoutesById: FileRoutesById
@@ -102,8 +186,15 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  CareersRoute: typeof CareersRoute
+  ContactRoute: typeof ContactRoute
+  NewsRoute: typeof NewsRoute
+  PrivacyRoute: typeof PrivacyRoute
+  TermsRoute: typeof TermsRoute
+  InsightsSlugRoute: typeof InsightsSlugRoute
   PracticeAreasSlugRoute: typeof PracticeAreasSlugRoute
   TeamSlugRoute: typeof TeamSlugRoute
+  InsightsIndexRoute: typeof InsightsIndexRoute
   PracticeAreasIndexRoute: typeof PracticeAreasIndexRoute
   TeamIndexRoute: typeof TeamIndexRoute
 }
@@ -122,6 +213,55 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/careers': {
+      id: '/careers'
+      path: '/careers'
+      fullPath: '/careers'
+      preLoaderRoute: typeof CareersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/news': {
+      id: '/news'
+      path: '/news'
+      fullPath: '/news'
+      preLoaderRoute: typeof NewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/insights/': {
+      id: '/insights/'
+      path: '/insights'
+      fullPath: '/insights/'
+      preLoaderRoute: typeof InsightsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/insights/$slug': {
+      id: '/insights/$slug'
+      path: '/insights/$slug'
+      fullPath: '/insights/$slug'
+      preLoaderRoute: typeof InsightsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/practice-areas/': {
@@ -158,21 +298,18 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  CareersRoute: CareersRoute,
+  ContactRoute: ContactRoute,
+  NewsRoute: NewsRoute,
+  PrivacyRoute: PrivacyRoute,
+  TermsRoute: TermsRoute,
+  InsightsSlugRoute: InsightsSlugRoute,
   PracticeAreasSlugRoute: PracticeAreasSlugRoute,
   TeamSlugRoute: TeamSlugRoute,
+  InsightsIndexRoute: InsightsIndexRoute,
   PracticeAreasIndexRoute: PracticeAreasIndexRoute,
   TeamIndexRoute: TeamIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

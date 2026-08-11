@@ -144,7 +144,7 @@ function InsightPage() {
             </div>
           </aside>
           <div className="measure md:col-span-8 lg:col-span-7">
-            {article.content.map((block, index) => (
+            {article.content.map((block: ContentBlock, index: number) => (
               <Block key={index} block={block} />
             ))}
             <ArrowLink to="/insights" className="mt-12">
