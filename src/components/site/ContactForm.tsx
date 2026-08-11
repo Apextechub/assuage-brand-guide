@@ -55,7 +55,11 @@ export function ContactForm() {
     (key: keyof FormState) =>
     (event: { target: { value: string } }) => {
       setValues((current) => ({ ...current, [key]: event.target.value }));
-      setErrors((current) => ({ ...current, [key]: undefined }));
+      setErrors((current) => {
+        const next = { ...current };
+        delete next[key];
+        return next;
+      });
     };
 
   const onSubmit = (event: FormEvent) => {

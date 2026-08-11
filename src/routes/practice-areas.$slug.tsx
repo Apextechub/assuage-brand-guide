@@ -46,7 +46,7 @@ function PracticeAreaPage() {
             <h2 id="overview-heading" className="sr-only">
               Overview
             </h2>
-            {area.overview.map((paragraph, index) => (
+            {area.overview.map((paragraph: string, index: number) => (
               <p
                 key={paragraph.slice(0, 32)}
                 className={
@@ -73,7 +73,7 @@ function PracticeAreaPage() {
               What we do
             </h2>
             <ul className="mt-8 grid gap-x-10 sm:grid-cols-2">
-              {area.services.map((service) => (
+              {area.services.map((service: string) => (
                 <li key={service} className="flex items-baseline gap-3 border-t border-rule py-4">
                   <span
                     className="size-1.5 shrink-0 -translate-y-0.5 bg-gold-deep"

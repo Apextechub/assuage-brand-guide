@@ -28,17 +28,25 @@ export function CareersForm() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState<Status>("idle");
 
+  const clearError = (key: keyof FormErrors) => {
+    setErrors((current) => {
+      const next = { ...current };
+      delete next[key];
+      return next;
+    });
+  };
+
   const set =
     (key: keyof FormState) =>
     (event: { target: { value: string } }) => {
       setValues((current) => ({ ...current, [key]: event.target.value }));
-      setErrors((current) => ({ ...current, [key]: undefined }));
+      clearError(key);
     };
 
   const onCvChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] ?? null;
     setCv(file);
-    setErrors((current) => ({ ...current, cv: undefined }));
+    clearError("cv");
     if (!file) return;
     const lower = file.name.toLowerCase();
     if (!CV_EXTENSIONS.some((ext) => lower.endsWith(ext))) {

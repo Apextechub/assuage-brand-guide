@@ -36,13 +36,25 @@ export function Button({
   return <button className={cn(buttonVariants({ variant, size }), className)} {...props} />;
 }
 
+type LinkProps = Omit<ComponentProps<typeof Link>, "children" | "params"> & {
+  children: ReactNode;
+  params?: Record<string, string>;
+};
+
 export function ButtonLink({
   variant,
   size,
   className,
+  params,
   ...props
-}: ComponentProps<typeof Link> & VariantProps<typeof buttonVariants>) {
-  return <Link className={cn(buttonVariants({ variant, size }), className)} {...props} />;
+}: LinkProps & VariantProps<typeof buttonVariants>) {
+  return (
+    <Link
+      className={cn(buttonVariants({ variant, size }), className)}
+      params={params as never}
+      {...props}
+    />
+  );
 }
 
 /** Editorial text link with arrow. `tone="dark"` is for navy/ink surfaces. */
@@ -50,10 +62,12 @@ export function ArrowLink({
   tone = "light",
   className,
   children,
+  params,
   ...props
-}: Omit<ComponentProps<typeof Link>, "children"> & { tone?: "light" | "dark"; children: ReactNode }) {
+}: LinkProps & { tone?: "light" | "dark" }) {
   return (
     <Link
+      params={params as never}
       className={cn(
         "group inline-flex items-center gap-2.5 font-sans text-[0.8125rem] font-medium uppercase tracking-[0.12em] transition-colors duration-200 ease-out",
         tone === "light" ? "text-gold-deep hover:text-ink" : "text-gold hover:text-paper",

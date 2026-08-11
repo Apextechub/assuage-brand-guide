@@ -99,7 +99,7 @@ function TeamMemberPage() {
             </p>
 
             <div className="measure mt-8">
-              {member.bio.map((paragraph) => (
+              {member.bio.map((paragraph: string) => (
                 <p key={paragraph.slice(0, 32)} className="mb-5 leading-relaxed text-ink-soft">
                   {paragraph}
                 </p>
@@ -108,7 +108,7 @@ function TeamMemberPage() {
 
             <h2 className="display-3 mt-14 text-ink">Qualifications</h2>
             <ul className="measure mt-6">
-              {member.qualifications.map((qualification) => (
+              {member.qualifications.map((qualification: string) => (
                 <li key={qualification} className="border-t border-rule py-3.5 text-sm text-ink">
                   {qualification}
                 </li>
@@ -117,7 +117,7 @@ function TeamMemberPage() {
 
             <h2 className="display-3 mt-14 text-ink">Notable matters</h2>
             <ul className="measure mt-6 space-y-4">
-              {member.matters.map((matter) => (
+              {member.matters.map((matter: string) => (
                 <li key={matter.slice(0, 32)} className="flex items-baseline gap-3">
                   <span
                     className="size-1.5 shrink-0 -translate-y-0.5 bg-gold-deep"
