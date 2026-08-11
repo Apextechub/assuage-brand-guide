@@ -54,7 +54,26 @@ Nothing else needs to be granted. Copy the token; GitHub shows it once.
 
 ### 3. Put the secrets on the Worker
 
-These live on the Worker itself and survive deploys:
+The Worker must exist in your Cloudflare account first — `wrangler secret put`
+has nothing to attach to otherwise. If it has never been deployed from your
+account, do that once:
+
+```sh
+npx wrangler login
+npm run build
+npx wrangler deploy
+```
+
+A brand-new Cloudflare account also needs a **workers.dev subdomain** registered
+before its first deploy — a one-time choice at
+`dash.cloudflare.com/<account-id>/workers/onboarding`. Wrangler tries to pick
+one automatically and fails if the name is taken.
+
+`wrangler.json` in the project root pins the Worker name so every wrangler
+command resolves it without `--name`. Nitro merges that file into the generated
+`.output/server/wrangler.json` at build time; put any future bindings there.
+
+With the Worker in place, these secrets live on it and survive deploys:
 
 ```sh
 npx wrangler secret put ADMIN_SESSION_SECRET   # any random string, 32+ characters
