@@ -9,8 +9,22 @@ const HASH = "SHA-256";
 const KEY_BITS = 256;
 const SALT_BYTES = 16;
 
-/** OWASP's 2023 floor for PBKDF2-HMAC-SHA256. */
-export const DEFAULT_ITERATIONS = 210_000;
+/**
+ * Cloudflare Workers' WebCrypto refuses PBKDF2 above 100,000 iterations:
+ *
+ *   Pbkdf2 failed: iteration counts above 100000 are not supported
+ *
+ * Node has no such cap, so a higher count works locally and fails only once
+ * deployed. Keep this at or below the Workers limit.
+ */
+export const MAX_ITERATIONS = 100_000;
+
+/**
+ * The most work the runtime allows. Below OWASP's recommended 210,000, so the
+ * strength of the password itself carries more weight here — see the note on
+ * choosing one in docs/content-admin.md.
+ */
+export const DEFAULT_ITERATIONS = MAX_ITERATIONS;
 
 function toBase64(bytes: Uint8Array): string {
   let binary = "";
@@ -41,6 +55,25 @@ async function derive(password: string, salt: Uint8Array, iterations: number): P
   return new Uint8Array(bits);
 }
 
+/**
+ * Why a stored hash is unusable, or null if it looks fine. Checked up front so
+ * the setup screen can name the problem instead of login failing obscurely.
+ */
+export function describeHashProblem(stored: string): string | null {
+  const parts = stored.split("$");
+  if (parts.length !== 4 || parts[0] !== PREFIX) {
+    return "is not in the expected format (run: node scripts/hash-password.mjs)";
+  }
+  const iterations = Number(parts[1]);
+  if (!Number.isInteger(iterations) || iterations < 1_000) {
+    return "has an implausible iteration count (run: node scripts/hash-password.mjs)";
+  }
+  if (iterations > MAX_ITERATIONS) {
+    return `uses ${iterations.toLocaleString("en-GB")} iterations, but Cloudflare Workers supports at most ${MAX_ITERATIONS.toLocaleString("en-GB")} — regenerate it with: node scripts/hash-password.mjs`;
+  }
+  return null;
+}
+
 export async function hashPassword(
   password: string,
   iterations: number = DEFAULT_ITERATIONS,
@@ -68,6 +101,11 @@ export async function verifyPassword(password: string, stored: string): Promise<
 
   const iterations = Number(parts[1]);
   if (!Number.isInteger(iterations) || iterations < 1_000) return false;
+  // Above the runtime cap deriveBits throws, which would surface to the editor
+  // as an unexplained server error. Fail closed with a clear message instead.
+  if (iterations > MAX_ITERATIONS) {
+    throw new Error(`The stored password hash ${describeHashProblem(stored) ?? "is unusable"}.`);
+  }
 
   let salt: Uint8Array;
   let expected: Uint8Array;

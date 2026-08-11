@@ -5,6 +5,8 @@
 // import. Set these with `wrangler secret put <NAME>` in production and in
 // .dev.vars locally (see docs/content-admin.md).
 
+import { describeHashProblem } from "./password.server";
+
 export interface AdminConfig {
   /** Encrypts and signs the session cookie. At least 32 characters. */
   sessionSecret: string;
@@ -53,8 +55,11 @@ export function readAdminConfig(): AdminConfig {
   if (sessionSecret.length < 32) missing.push("ADMIN_SESSION_SECRET (needs 32+ characters)");
 
   const passwordHash = read("ADMIN_PASSWORD_HASH");
-  if (!passwordHash.startsWith("pbkdf2$")) {
+  if (!passwordHash) {
     missing.push("ADMIN_PASSWORD_HASH (run: node scripts/hash-password.mjs)");
+  } else {
+    const problem = describeHashProblem(passwordHash);
+    if (problem) missing.push(`ADMIN_PASSWORD_HASH ${problem}`);
   }
 
   const githubToken = read("GITHUB_TOKEN");

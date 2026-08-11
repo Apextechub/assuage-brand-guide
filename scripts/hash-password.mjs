@@ -14,7 +14,7 @@ import { createInterface } from "node:readline";
 import { Writable } from "node:stream";
 import { webcrypto as crypto } from "node:crypto";
 
-const ITERATIONS = 210_000;
+const ITERATIONS = 100_000; // Cloudflare Workers rejects anything above this
 const SALT_BYTES = 16;
 const KEY_BITS = 256;
 
