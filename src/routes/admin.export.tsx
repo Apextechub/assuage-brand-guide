@@ -157,9 +157,23 @@ function PublishScreen() {
 
       {nothingToDo && blocked.length === 0 && phase.state === "idle" && (
         <div className="mt-8">
-          <Notice title="Nothing to publish">
-            What you have here already matches the live site.
-          </Notice>
+          {heldBack.length > 0 ? (
+            <Notice
+              title={`Nothing to publish — ${heldBack.length} item${heldBack.length === 1 ? " is" : "s are"} still a draft`}
+            >
+              Drafts are deliberately left out of the live site. Open the item and press{" "}
+              <strong className="text-ink">Save</strong>, or use{" "}
+              <strong className="text-ink">Publish</strong> on its row in{" "}
+              <Link to="/admin" className="text-gold-deep underline underline-offset-4">
+                Content
+              </Link>
+              , to include it here.
+            </Notice>
+          ) : (
+            <Notice title="Nothing to publish">
+              What you have here already matches the live site.
+            </Notice>
+          )}
         </div>
       )}
 

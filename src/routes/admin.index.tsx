@@ -38,7 +38,7 @@ function AdminDashboard() {
       <AdminHeading
         label="Content"
         title="News and insights"
-        intro="Write and edit here, then hand the finished files to whoever deploys the site. Nothing you change on this screen is live yet."
+        intro="Write and edit here. Nothing on this screen is live until you publish it."
         actions={
           <Link
             to={tab === "insights" ? "/admin/insights/$id" : "/admin/news/$id"}
@@ -58,7 +58,7 @@ function AdminDashboard() {
             <Link to="/admin/export" className="text-gold-deep underline underline-offset-4">
               Publish
             </Link>{" "}
-            to generate the files that need to be committed.
+            to put them on the website.
           </Notice>
         </div>
       )}
@@ -147,7 +147,9 @@ function Row({ draft, siblings }: { draft: AnyDraft; siblings: AnyDraft[] }) {
           {draft.slug || "…"}
         </p>
         <div className="mt-3 flex flex-wrap gap-2">
-          {draft.status === "draft" && <StatusPill tone="draft">Draft — not exported</StatusPill>}
+          {draft.status === "draft" && (
+            <StatusPill tone="draft">Draft — not on the site</StatusPill>
+          )}
           {modified && draft.status === "published" && (
             <StatusPill tone="edited">Edited here</StatusPill>
           )}

@@ -80,7 +80,12 @@ function NewsEditor() {
   const save = (thenClose: boolean) => {
     setSubmitted(true);
     if (!validation?.ok) return;
-    actions.saveNews(draft);
+    // Save means "ready to go live". A new announcement starts as a draft, so
+    // without this it would save quietly and then be left out of the export,
+    // and Publish would report nothing to do.
+    const ready = { ...draft, status: "published" as const };
+    actions.saveNews(ready);
+    setDraft(ready);
     setSavedAt(now());
     setDirty(false);
     // The guard reads `dirty` from this render, so leave on the next one.
@@ -132,12 +137,12 @@ function NewsEditor() {
 
       {savedAt && (
         <div className="mt-6">
-          <Notice title={`Saved in this browser at ${savedAt}`}>
-            To put it on the live site, open{" "}
+          <Notice title={`Saved at ${savedAt} — not live yet`}>
+            Saved in this browser. To put it on the website, go to{" "}
             <Link to="/admin/export" className="text-gold-deep underline underline-offset-4">
               Publish
             </Link>{" "}
-            and send the generated file to whoever deploys the site.
+            and press <strong className="text-ink">Publish to the live site</strong>.
           </Notice>
         </div>
       )}
