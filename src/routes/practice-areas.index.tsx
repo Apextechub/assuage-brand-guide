@@ -30,7 +30,7 @@ function PracticeAreasPage() {
       <PageHeader
         label="Practice areas"
         title="What we do"
-        intro="Eight practice areas, one standard of preparation. Select any area to read a summary and see the partner who leads it."
+        intro="Five practice areas, one standard of preparation. Select any area to read a summary of the work we do there."
       />
       <section className="py-16 md:py-24" aria-label="Practice area index">
         <Container>

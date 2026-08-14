@@ -9,7 +9,7 @@ import { team } from "@/data/team";
 import { cn } from "@/lib/utils";
 
 const description =
-  "The partners and associates of Assuage Attorneys, a commercial law firm in Lagos, Nigeria.";
+  "The partners and associates of Assuage Attorneys, a law firm in Onitsha, Anambra State.";
 
 export const Route = createFileRoute("/team/")({
   head: () => ({
@@ -30,18 +30,16 @@ export const Route = createFileRoute("/team/")({
 function TeamPage() {
   const [filter, setFilter] = useState<string | null>(null);
   const areasWithMembers = practiceAreas.filter((area) =>
-    team.some((member) => member.practiceAreas.includes(area.slug))
+    team.some((member) => member.practiceAreas.includes(area.slug)),
   );
-  const visible = filter
-    ? team.filter((member) => member.practiceAreas.includes(filter))
-    : team;
+  const visible = filter ? team.filter((member) => member.practiceAreas.includes(filter)) : team;
 
   const chipClass = (active: boolean) =>
     cn(
       "micro-label cursor-pointer border px-4 py-2.5 transition-colors duration-200",
       active
         ? "border-navy bg-navy text-paper"
-        : "border-rule text-ink-soft hover:border-ink hover:text-ink"
+        : "border-rule text-ink-soft hover:border-ink hover:text-ink",
     );
 
   return (

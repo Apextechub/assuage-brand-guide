@@ -19,7 +19,9 @@ export function PracticeLedger({ areas }: { areas: PracticeArea[] }) {
     <div className="border-t border-rule">
       {areas.map((area, index) => {
         const open = openSlug === area.slug;
-        const partner = getTeamMember(area.leadPartner);
+        // The firm has not named lead partners; the block below is skipped
+        // until `leadPartner` is set in practiceAreas.ts.
+        const partner = area.leadPartner ? getTeamMember(area.leadPartner) : undefined;
         const panelId = `ledger-panel-${area.slug}`;
         return (
           <div

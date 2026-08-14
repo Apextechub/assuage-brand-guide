@@ -7,7 +7,7 @@ import { PageHeader } from "@/components/site/PageHeader";
 import { site } from "@/data/site";
 
 const description =
-  "Contact Assuage Attorneys in Lagos, Nigeria. Request a consultation and a member of our team will respond within one business day.";
+  "Contact Assuage Attorneys in Onitsha, Anambra State. Schedule a consultation to discuss your circumstances and the appropriate next steps.";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -31,7 +31,7 @@ function ContactPage() {
       <PageHeader
         label="Contact"
         title="Request a consultation"
-        intro="Tell us briefly about your matter and how to reach you. A member of our team will respond within one business day."
+        intro="Legal problems are often easier to manage when addressed early. Whether you need legal advice, documentation, representation or guidance, our team is available to discuss your circumstances and advise you on the appropriate next steps."
       />
 
       <section className="py-16 md:py-24" aria-label="Consultation request form and office details">
@@ -57,10 +57,20 @@ function ContactPage() {
                     {site.phone}
                   </a>
                 </p>
-                <p className="mt-2 text-sm">
+                <p className="mt-3 text-sm">
+                  <span className="block text-ink-soft">Consultations</span>
+                  <a
+                    href={`mailto:${site.consultationEmail}`}
+                    className="break-all text-gold-deep underline decoration-gold-deep/30 underline-offset-4 transition-colors duration-200 hover:text-ink"
+                  >
+                    {site.consultationEmail}
+                  </a>
+                </p>
+                <p className="mt-3 text-sm">
+                  <span className="block text-ink-soft">General enquiries</span>
                   <a
                     href={`mailto:${site.email}`}
-                    className="text-gold-deep underline decoration-gold-deep/30 underline-offset-4 transition-colors duration-200 hover:text-ink"
+                    className="break-all text-gold-deep underline decoration-gold-deep/30 underline-offset-4 transition-colors duration-200 hover:text-ink"
                   >
                     {site.email}
                   </a>
@@ -72,19 +82,6 @@ function ContactPage() {
               </p>
             </div>
           </aside>
-        </Container>
-      </section>
-
-      <section aria-label="Map of the Lagos office area" className="border-t border-rule">
-        <Container className="py-16">
-          <iframe
-            title="Map showing Victoria Island, Lagos, where the firm's office is located"
-            src="https://www.openstreetmap.org/export/embed.html?bbox=3.3950%2C6.4150%2C3.4500%2C6.4400&layer=mapnik&marker=6.4281%2C3.4219"
-            className="h-[420px] w-full border border-rule grayscale"
-            loading="lazy"
-          />
-          {/* TODO: confirm the office pin once the real address is available */}
-          <p className="micro-label mt-4 text-ink-soft">Victoria Island, Lagos — indicative location</p>
         </Container>
       </section>
     </>

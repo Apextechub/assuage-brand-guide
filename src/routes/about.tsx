@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import aboutLagos from "@/assets/about-lagos.jpg";
 import { ClosingBand } from "@/components/site/ClosingBand";
 import { Container } from "@/components/site/Container";
 import { MicroLabel } from "@/components/site/MicroLabel";
@@ -7,26 +6,24 @@ import { PageHeader } from "@/components/site/PageHeader";
 import { Reveal } from "@/components/site/Reveal";
 
 const description =
-  "The story, philosophy and approach of Assuage Attorneys, a commercial law firm based in Lagos, Nigeria.";
+  "The story, philosophy and approach of Assuage Attorneys, a Nigerian law firm based in Onitsha, Anambra State.";
 
-// TODO: all copy on this page is placeholder text for layout and tone.
-// Replace with the firm's real history and approved positioning.
 const differentiators = [
   {
-    title: "Partner attention on every matter",
-    body: "Matters are led by partners, not passed down. Clients deal directly with the lawyer responsible for their work, from the first meeting to the last signature.",
+    title: "How we practise, not only what we practise",
+    body: "Our distinction lies not only in the areas of law we practise, but in how we practise law. We combine professional legal expertise with a practical understanding of our clients' realities.",
   },
   {
-    title: "Plain-language advice",
-    body: "We write advice the way we would want to receive it: direct, specific and free of unnecessary qualification. If a point is uncertain, we say so and explain why.",
+    title: "No unnecessary complexity",
+    body: "We do not believe in unnecessary complexity, or in treating clients as mere case files. We listen, communicate and strategise on every matter we take on.",
   },
   {
-    title: "Measured, risk-first counsel",
-    body: "We would rather give cautious advice that holds than optimistic advice that pleases. Our opinions say what we can support, and our clients know where they stand.",
+    title: "Committed to the right solution",
+    body: "We remain committed to finding the most appropriate solution to every case, rather than the most obvious one, and we say plainly where a matter is likely to lead.",
   },
   {
-    title: "Responsive to international counsel",
-    body: "Much of our work comes from firms outside Nigeria. We keep their time zones, formats and reporting standards in mind, and we answer when they call.",
+    title: "Clarity, strategy and ease",
+    body: "Our promise is simple: to bring clarity to complexity, strategy to legal challenges, and ease to the legal process.",
   },
 ];
 
@@ -51,8 +48,8 @@ function AboutPage() {
     <>
       <PageHeader
         label="About us"
-        title="A firm built on careful work."
-        intro="Assuage Attorneys is a commercial law firm based in Lagos. We advise Nigerian and international clients on the corporate, finance and dispute matters that affect their businesses in Nigeria."
+        title="Addressing legal concerns with ease."
+        intro="Assuage Attorneys is a Nigerian law firm providing legal services to individuals, families, entrepreneurs, companies and organisations."
       />
 
       {/* Firm story */}
@@ -66,16 +63,22 @@ function AboutPage() {
               Our story
             </h2>
             <p className="measure text-lg leading-relaxed text-ink">
-              The firm was established in Lagos by lawyers who had trained in larger commercial
-              practices and wanted to build something more deliberate: a firm small enough for
-              partners to know every file, and experienced enough for clients to trust with
-              significant matters.
+              The firm was founded in April 2022 with a simple but enduring idea: legal problems
+              should not have to become overwhelming before people seek professional help, and
+              quality legal representation should be both effective and reassuring.
             </p>
             <p className="measure mt-5 leading-relaxed text-ink-soft">
-              That shape has not changed. We remain a compact partnership by choice, taking on work
-              we can do properly and declining what we cannot. Our clients are companies, investors,
-              financial institutions and international law firms who need Nigerian counsel they can
-              reach and rely on.
+              The name Assuage — meaning to ease, relieve or lessen a burden — reflects the
+              philosophy upon which the firm was established: to provide sound legal solutions while
+              making the legal process clearer, more manageable and less burdensome for our clients.
+            </p>
+            <p className="measure mt-5 leading-relaxed text-ink-soft">
+              From our foundation, we have been committed to building a practice anchored on
+              integrity, excellence, diligence, effectiveness and genuine client service. We
+              understand that behind every legal matter is a person, family, business, investment or
+              aspiration that matters deeply to someone. Consequently, we approach every brief as an
+              opportunity to protect the interests of our clients and to provide a practical
+              strategy for achieving their objectives.
             </p>
           </div>
         </Container>
@@ -87,15 +90,18 @@ function AboutPage() {
           <div className="border-t-2 border-navy pt-8">
             <MicroLabel>Our mission</MicroLabel>
             <p className="display-3 mt-5 text-ink">
-              To give clients clear, honest advice on Nigerian law, and to do the careful work that
-              advice depends on.
+              To provide effective, ethical and client-focused legal services that address our
+              clients' concerns, protect their interests and deliver practical solutions, while
+              maintaining the highest standards of professional integrity.
             </p>
           </div>
           <div className="border-t-2 border-navy pt-8">
             <MicroLabel>Our vision</MicroLabel>
             <p className="display-3 mt-5 text-ink">
-              To be the firm that serious clients call when the matter in front of them has to be
-              done properly.
+              To build a distinguished and trusted Nigerian law firm recognised for legal
+              excellence, integrity, innovation and exceptional client service — trusted advisers
+              whom individuals, families and businesses can rely upon when making important legal
+              decisions.
             </p>
           </div>
         </Container>
@@ -122,52 +128,6 @@ function AboutPage() {
                 </div>
               </Reveal>
             ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* Documentary image */}
-      <section aria-label="Lagos, where the firm is based">
-        <Container className="pb-4">
-          <div className="aspect-[16/9] overflow-hidden bg-mist">
-            <img
-              src={aboutLagos}
-              alt="The Lagos Island skyline seen from the lagoon in morning haze"
-              width={1280}
-              height={720}
-              loading="lazy"
-              decoding="async"
-              className="size-full object-cover"
-            />
-          </div>
-          <p className="micro-label mt-4 text-ink-soft">Lagos Island, from the lagoon</p>
-        </Container>
-      </section>
-
-      {/*
-        Memberships & accreditations band.
-        TODO: replace these placeholders with the firm's real professional
-        memberships as small greyscale logos. If the firm has none, delete
-        this entire section — nothing else depends on it.
-      */}
-      <section className="mt-16 bg-mist py-14" aria-labelledby="memberships-heading">
-        <Container>
-          <MicroLabel tone="muted">Memberships &amp; accreditations</MicroLabel>
-          <h2 id="memberships-heading" className="sr-only">
-            Memberships and accreditations
-          </h2>
-          <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4">
-            {["Membership logo", "Membership logo", "Membership logo", "Membership logo"].map(
-              (label, index) => (
-                <div
-                  key={index}
-                  className="flex h-20 items-center justify-center border border-rule bg-paper grayscale"
-                  aria-hidden="true"
-                >
-                  <span className="micro-label text-ink-soft/50">{label}</span>
-                </div>
-              )
-            )}
           </div>
         </Container>
       </section>

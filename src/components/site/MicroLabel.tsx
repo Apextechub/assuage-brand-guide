@@ -22,7 +22,7 @@ export function MicroLabel({
         tone === "goldDeep" && "text-gold-deep",
         tone === "gold" && "text-gold",
         tone === "muted" && "text-ink-soft",
-        className
+        className,
       )}
     >
       {children}

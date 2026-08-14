@@ -50,7 +50,7 @@ export function Header() {
       <header
         className={cn(
           "on-dark fixed inset-x-0 top-0 z-50 transition-colors duration-300 ease-out",
-          solid ? "border-b border-paper/10 bg-ink" : "border-b border-transparent bg-transparent"
+          solid ? "border-b border-paper/10 bg-ink" : "border-b border-transparent bg-transparent",
         )}
       >
         <div className="mx-auto flex h-20 w-full max-w-[76rem] items-center justify-between px-5 md:h-24 md:px-10">

@@ -76,10 +76,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Assuage Attorneys — Commercial Law Firm in Lagos" },
+      { title: "Assuage Attorneys - Law Firm in Nigeria" },
       { name: "description", content: site.description },
       { name: "author", content: site.name },
-      { property: "og:title", content: "Assuage Attorneys — Commercial Law Firm in Lagos" },
+      { property: "og:title", content: "Assuage Attorneys — Law Firm in Nigeria" },
       { property: "og:description", content: site.description },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: site.name },

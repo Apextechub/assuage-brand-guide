@@ -19,6 +19,27 @@ type FormErrors = Partial<Record<keyof FormState | "cv", string>>;
 
 const initialState: FormState = { name: "", email: "", phone: "", role: "", coverNote: "" };
 
+/** The application as a mailto: link. The CV is named, not attached. */
+function mailtoHref(values: FormState, cv: File | null): string {
+  const body = [
+    `Name: ${values.name}`,
+    `Email: ${values.email}`,
+    values.phone.trim() ? `Phone: ${values.phone}` : null,
+    values.role.trim() ? `Role: ${values.role}` : null,
+    cv ? `CV: ${cv.name} (please attach before sending)` : "CV: please attach before sending",
+    "",
+    values.coverNote,
+  ]
+    .filter((line) => line !== null)
+    .join("\n");
+
+  const query = new URLSearchParams({
+    subject: values.role.trim() ? `Application — ${values.role}` : "Speculative application",
+    body,
+  });
+  return `mailto:${site.email}?${query.toString().replace(/\+/g, "%20")}`;
+}
+
 const MAX_CV_BYTES = 5 * 1024 * 1024;
 const CV_EXTENSIONS = [".pdf", ".doc", ".docx"];
 
@@ -36,12 +57,10 @@ export function CareersForm() {
     });
   };
 
-  const set =
-    (key: keyof FormState) =>
-    (event: { target: { value: string } }) => {
-      setValues((current) => ({ ...current, [key]: event.target.value }));
-      clearError(key);
-    };
+  const set = (key: keyof FormState) => (event: { target: { value: string } }) => {
+    setValues((current) => ({ ...current, [key]: event.target.value }));
+    clearError(key);
+  };
 
   const onCvChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] ?? null;
@@ -78,20 +97,35 @@ export function CareersForm() {
       return;
     }
     setStatus("submitting");
-    // Placeholder submit — there is no backend yet.
-    // TODO: wire this to the firm's recruitment mailbox / ATS when available.
-    window.setTimeout(() => setStatus("success"), 1200);
+    // No recruitment inbox is wired up, and a browser cannot attach the chosen
+    // CV to a mailto: message. Rather than claim the application was received,
+    // open the applicant's mail client with their details and ask them to
+    // attach the CV themselves.
+    window.location.href = mailtoHref(values, cv);
+    setStatus("success");
   };
 
   if (status === "success") {
     return (
       <div role="status" className="border border-rule bg-paper p-8 md:p-10">
         <CheckCircle2 className="size-8 text-gold-deep" aria-hidden="true" />
-        <h2 className="display-3 mt-5 text-ink">Application received.</h2>
+        <h2 className="display-3 mt-5 text-ink">One last step.</h2>
         <p className="measure mt-4 leading-relaxed text-ink-soft">
-          Thank you for your interest in {site.name}. We review every application and will contact
-          you if your experience fits a current or upcoming role. We keep applications on file for
-          twelve months.
+          Your email application should have opened with your details ready to send to {site.email}.{" "}
+          <strong className="text-ink">
+            Please attach your CV{cv ? ` (${cv.name})` : ""} before sending — a web form cannot
+            attach it for you.
+          </strong>
+        </p>
+        <p className="measure mt-4 leading-relaxed text-ink-soft">
+          If nothing opened, email us directly at{" "}
+          <a
+            href={`mailto:${site.email}`}
+            className="break-all text-gold-deep underline decoration-gold-deep/30 underline-offset-4 hover:text-ink"
+          >
+            {site.email}
+          </a>
+          . Thank you for your interest in {site.name}.
         </p>
         <Button
           variant="outline"
@@ -102,7 +136,7 @@ export function CareersForm() {
             setStatus("idle");
           }}
         >
-          Submit another application
+          Start a new application
         </Button>
       </div>
     );

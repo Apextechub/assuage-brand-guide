@@ -1,13 +1,16 @@
 import { Link } from "@tanstack/react-router";
-import { Instagram, Linkedin, Twitter } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Music2, Twitter } from "lucide-react";
 import { site } from "@/data/site";
 import { practiceAreas } from "@/data/practiceAreas";
 import { Logo } from "./Logo";
 
+// Lucide has no TikTok glyph; Music2 is the conventional stand-in.
 const socialIcons: Record<string, typeof Linkedin> = {
   LinkedIn: Linkedin,
   X: Twitter,
   Instagram: Instagram,
+  Facebook: Facebook,
+  TikTok: Music2,
 };
 
 export function Footer() {
@@ -17,7 +20,9 @@ export function Footer() {
         <div className="grid gap-12 md:grid-cols-12">
           <div className="md:col-span-4">
             <Logo tone="white" className="h-16" />
-            <p className="mt-6 max-w-xs text-sm leading-relaxed text-paper/60">{site.description}</p>
+            <p className="mt-6 max-w-xs text-sm leading-relaxed text-paper/60">
+              {site.description}
+            </p>
           </div>
 
           <nav className="md:col-span-2" aria-label="Practice areas">
@@ -78,6 +83,8 @@ export function Footer() {
                   <a
                     key={item.label}
                     href={item.href}
+                    target="_blank"
+                    rel="noreferrer noopener"
                     aria-label={`Assuage Attorneys on ${item.label}`}
                     className="flex size-10 items-center justify-center border border-paper/15 text-paper/70 transition-colors duration-200 hover:border-gold hover:text-gold"
                   >

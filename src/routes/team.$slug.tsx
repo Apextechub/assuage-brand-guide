@@ -3,7 +3,9 @@ import { ArrowLink } from "@/components/site/Button";
 import { ClosingBand } from "@/components/site/ClosingBand";
 import { Container } from "@/components/site/Container";
 import { MicroLabel } from "@/components/site/MicroLabel";
+import { Portrait } from "@/components/site/Portrait";
 import { practiceAreas } from "@/data/practiceAreas";
+import { site } from "@/data/site";
 import { getTeamMember } from "@/data/team";
 
 export const Route = createFileRoute("/team/$slug")({
@@ -14,13 +16,16 @@ export const Route = createFileRoute("/team/$slug")({
   },
   head: ({ loaderData }) => {
     const description = loaderData
-      ? `${loaderData.name}, ${loaderData.role} at Assuage Attorneys, a commercial law firm in Lagos, Nigeria.`
+      ? `${loaderData.name}, ${loaderData.role} at Assuage Attorneys, a law firm in Onitsha, Anambra State.`
       : "Our people — Assuage Attorneys";
     return {
       meta: [
         { title: `${loaderData?.name ?? "Our people"} — Assuage Attorneys` },
         { name: "description", content: description },
-        { property: "og:title", content: `${loaderData?.name ?? "Our people"} — Assuage Attorneys` },
+        {
+          property: "og:title",
+          content: `${loaderData?.name ?? "Our people"} — Assuage Attorneys`,
+        },
         { property: "og:description", content: description },
         { property: "og:type", content: "profile" },
         { property: "og:url", content: `/team/${loaderData?.slug ?? ""}` },
@@ -43,34 +48,28 @@ function TeamMemberPage() {
           {/* Portrait + contact card */}
           <div className="md:col-span-4">
             <div className="aspect-[3/4] overflow-hidden bg-mist">
-              <img
-                src={member.portrait}
-                alt={member.portraitAlt}
-                width={768}
-                height={1024}
-                fetchPriority="high"
-                decoding="async"
-                className="size-full object-cover"
-              />
+              <Portrait member={member} eager />
             </div>
             <div className="mt-6 border border-rule p-6">
               <MicroLabel>Contact</MicroLabel>
               <p className="mt-4 text-sm">
                 <a
-                  href={`mailto:${member.email}`}
+                  href={`mailto:${member.email ?? site.email}`}
                   className="break-all text-gold-deep underline decoration-rule underline-offset-4 transition-colors duration-200 hover:decoration-gold-deep"
                 >
-                  {member.email}
+                  {member.email ?? site.email}
                 </a>
               </p>
-              <p className="mt-3 text-sm">
-                <a
-                  href={member.linkedin}
-                  className="text-ink underline decoration-rule underline-offset-4 transition-colors duration-200 hover:text-gold-deep hover:decoration-gold-deep"
-                >
-                  LinkedIn profile
-                </a>
-              </p>
+              {member.linkedin && (
+                <p className="mt-3 text-sm">
+                  <a
+                    href={member.linkedin}
+                    className="text-ink underline decoration-rule underline-offset-4 transition-colors duration-200 hover:text-gold-deep hover:decoration-gold-deep"
+                  >
+                    LinkedIn profile
+                  </a>
+                </p>
+              )}
               <div className="mt-6 border-t border-rule pt-4">
                 <MicroLabel tone="muted">Practice areas</MicroLabel>
                 <ul className="mt-3 space-y-1.5">
@@ -94,9 +93,11 @@ function TeamMemberPage() {
           <div className="md:col-span-8">
             <MicroLabel>{member.role}</MicroLabel>
             <h1 className="display-1 mt-4 text-ink">{member.name}</h1>
-            <p className="micro-label mt-5 text-ink-soft">
-              Called to the Nigerian Bar · {member.yearOfCall}
-            </p>
+            {member.yearOfCall !== undefined && (
+              <p className="micro-label mt-5 text-ink-soft">
+                Called to the Nigerian Bar · {member.yearOfCall}
+              </p>
+            )}
 
             <div className="measure mt-8">
               {member.bio.map((paragraph: string) => (
@@ -106,27 +107,38 @@ function TeamMemberPage() {
               ))}
             </div>
 
-            <h2 className="display-3 mt-14 text-ink">Qualifications</h2>
-            <ul className="measure mt-6">
-              {member.qualifications.map((qualification: string) => (
-                <li key={qualification} className="border-t border-rule py-3.5 text-sm text-ink">
-                  {qualification}
-                </li>
-              ))}
-            </ul>
+            {member.qualifications && member.qualifications.length > 0 && (
+              <>
+                <h2 className="display-3 mt-14 text-ink">Qualifications</h2>
+                <ul className="measure mt-6">
+                  {member.qualifications.map((qualification: string) => (
+                    <li
+                      key={qualification}
+                      className="border-t border-rule py-3.5 text-sm text-ink"
+                    >
+                      {qualification}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
 
-            <h2 className="display-3 mt-14 text-ink">Notable matters</h2>
-            <ul className="measure mt-6 space-y-4">
-              {member.matters.map((matter: string) => (
-                <li key={matter.slice(0, 32)} className="flex items-baseline gap-3">
-                  <span
-                    className="size-1.5 shrink-0 -translate-y-0.5 bg-gold-deep"
-                    aria-hidden="true"
-                  />
-                  <span className="leading-relaxed text-ink-soft">{matter}</span>
-                </li>
-              ))}
-            </ul>
+            {member.matters && member.matters.length > 0 && (
+              <>
+                <h2 className="display-3 mt-14 text-ink">Notable matters</h2>
+                <ul className="measure mt-6 space-y-4">
+                  {member.matters.map((matter: string) => (
+                    <li key={matter.slice(0, 32)} className="flex items-baseline gap-3">
+                      <span
+                        className="size-1.5 shrink-0 -translate-y-0.5 bg-gold-deep"
+                        aria-hidden="true"
+                      />
+                      <span className="leading-relaxed text-ink-soft">{matter}</span>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
 
             <ArrowLink to="/team" className="mt-14">
               Back to all people

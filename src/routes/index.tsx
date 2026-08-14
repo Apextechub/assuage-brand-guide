@@ -14,14 +14,14 @@ import { site } from "@/data/site";
 import { team } from "@/data/team";
 
 const description =
-  "Assuage Attorneys is a commercial law firm in Lagos, Nigeria, advising companies, investors and international counsel on corporate, finance and dispute matters.";
+  "Assuage Attorneys is a Nigerian law firm in Onitsha, Anambra State, providing legal services to individuals, families, entrepreneurs, companies and organisations.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Assuage Attorneys — Commercial Law Firm in Lagos" },
+      { title: "Assuage Attorneys - Law Firm in Onitsha, Nigeria" },
       { name: "description", content: description },
-      { property: "og:title", content: "Assuage Attorneys — Commercial Law Firm in Lagos" },
+      { property: "og:title", content: "Assuage Attorneys - Law Firm in Onitsha, Nigeria" },
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },
@@ -41,7 +41,8 @@ export const Route = createFileRoute("/")({
           address: {
             "@type": "PostalAddress",
             streetAddress: site.offices[0]?.lines[0] ?? "",
-            addressLocality: "Lagos",
+            addressLocality: "Onitsha",
+            addressRegion: "Anambra State",
             addressCountry: "NG",
           },
           areaServed: "Nigeria",
@@ -60,15 +61,13 @@ function HomePage() {
       {/* Hero — navy, one restrained display line, single primary CTA */}
       <section className="on-dark bg-navy">
         <Container className="pb-20 pt-40 md:pb-28 md:pt-56">
-          <MicroLabel tone="gold" className="hero-fade">
-            Commercial law firm · Lagos, Nigeria
-          </MicroLabel>
           <h1 className="display-1 hero-fade-delay mt-6 max-w-4xl text-paper">
-            Clear, considered counsel for business in Nigeria.
+            Addressing legal concerns with ease.
           </h1>
           <p className="hero-fade-delay measure mt-8 text-lg leading-relaxed text-paper/70">
-            Assuage Attorneys advises companies, investors and international counsel on corporate,
-            finance and dispute matters under Nigerian law.
+            Assuage Attorneys provides legal services to individuals, families, entrepreneurs,
+            companies and organisations - bringing clarity to complexity, and ease to the legal
+            process.
           </p>
           <div className="hero-fade-delay mt-10 flex flex-wrap items-center gap-x-8 gap-y-5">
             <ButtonLink to="/contact" variant="inverse">
@@ -81,7 +80,6 @@ function HomePage() {
         </Container>
       </section>
 
-      {/* Credibility strip — placeholder figures */}
       <StatStrip />
 
       {/* Intro */}
@@ -92,13 +90,14 @@ function HomePage() {
           </div>
           <div className="md:col-span-8">
             <h2 id="intro-heading" className="display-3 measure text-ink">
-              We advise on the transactions, financing and disputes that shape our clients'
-              businesses — carefully, and in plain language.
+              Legal problems should not have to become overwhelming before people seek professional
+              help.
             </h2>
             <p className="measure mt-6 leading-relaxed text-ink-soft">
-              Our clients include Nigerian companies, foreign investors and international law firms
-              seeking Nigerian counsel. We keep our teams small, our advice direct and our
-              preparation thorough.
+              We combine professional legal expertise with a practical understanding of our clients'
+              realities. We do not believe in unnecessary complexity, or in treating clients as mere
+              case files - we listen, communicate, strategise and remain committed to finding the
+              most appropriate solution to every matter.
             </p>
             <ArrowLink to="/about" className="mt-8">
               More about the firm
@@ -137,8 +136,8 @@ function HomePage() {
             </div>
             <ArrowLink to="/team">Meet the team</ArrowLink>
           </div>
-          <div className="grid grid-cols-2 gap-6 md:gap-8 lg:grid-cols-4">
-            {team.slice(0, 4).map((member, index) => (
+          <div className="grid grid-cols-2 gap-6 md:gap-8 lg:grid-cols-3">
+            {team.slice(0, 3).map((member, index) => (
               <Reveal key={member.slug} delay={index * 60}>
                 <TeamCard member={member} />
               </Reveal>
@@ -147,25 +146,27 @@ function HomePage() {
         </Container>
       </section>
 
-      {/* Insights teaser */}
-      <section className="border-t border-rule py-20 md:py-28" aria-labelledby="insights-heading">
-        <Container>
-          <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
-            <div>
-              <MicroLabel>Insights</MicroLabel>
-              <h2 id="insights-heading" className="display-2 mt-4 text-ink">
-                Recent commentary
-              </h2>
+      {/* Insights teaser — hidden until the firm publishes its first article. */}
+      {latestInsights.length > 0 && (
+        <section className="border-t border-rule py-20 md:py-28" aria-labelledby="insights-heading">
+          <Container>
+            <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
+              <div>
+                <MicroLabel>Insights</MicroLabel>
+                <h2 id="insights-heading" className="display-2 mt-4 text-ink">
+                  Recent commentary
+                </h2>
+              </div>
+              <ArrowLink to="/insights">All insights</ArrowLink>
             </div>
-            <ArrowLink to="/insights">All insights</ArrowLink>
-          </div>
-          <div className="border-t border-rule">
-            {latestInsights.map((article) => (
-              <ArticleListItem key={article.slug} article={article} />
-            ))}
-          </div>
-        </Container>
-      </section>
+            <div className="border-t border-rule">
+              {latestInsights.map((article) => (
+                <ArticleListItem key={article.slug} article={article} />
+              ))}
+            </div>
+          </Container>
+        </section>
+      )}
 
       <ClosingBand />
     </>

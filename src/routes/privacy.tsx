@@ -9,7 +9,7 @@ const sections: { heading: string; body: string[] }[] = [
   {
     heading: "Who we are",
     body: [
-      `${site.name} is a commercial law firm based in Lagos, Nigeria. This policy explains how we collect, use and protect personal data in connection with this website and our enquiries process, in line with the Nigeria Data Protection Act 2023.`,
+      `${site.name} is a law firm based in Onitsha, Anambra State, Nigeria. This policy explains how we collect, use and protect personal data in connection with this website and our enquiries process, in line with the Nigeria Data Protection Act 2023.`,
     ],
   },
   {
@@ -39,7 +39,7 @@ const sections: { heading: string; body: string[] }[] = [
   {
     heading: "Contact",
     body: [
-      `Questions about this policy or about how we handle personal data may be sent to ${site.email} or addressed to the Data Protection contact at our Lagos office.`,
+      `Questions about this policy or about how we handle personal data may be sent to ${site.email} or addressed to the Data Protection contact at our Onitsha office.`,
     ],
   },
 ];

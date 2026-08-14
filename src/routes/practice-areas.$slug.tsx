@@ -17,7 +17,10 @@ export const Route = createFileRoute("/practice-areas/$slug")({
     meta: [
       { title: `${loaderData?.name ?? "Practice area"} — Assuage Attorneys` },
       { name: "description", content: loaderData?.summary ?? "" },
-      { property: "og:title", content: `${loaderData?.name ?? "Practice area"} — Assuage Attorneys` },
+      {
+        property: "og:title",
+        content: `${loaderData?.name ?? "Practice area"} — Assuage Attorneys`,
+      },
       { property: "og:description", content: loaderData?.summary ?? "" },
       { property: "og:type", content: "website" },
       { property: "og:url", content: `/practice-areas/${loaderData?.slug ?? ""}` },

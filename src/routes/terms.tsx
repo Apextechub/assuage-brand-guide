@@ -9,7 +9,7 @@ const sections: { heading: string; body: string[] }[] = [
   {
     heading: "About this website",
     body: [
-      `This website is published by ${site.name}, a commercial law firm based in Lagos, Nigeria. By using this website you accept these terms of use.`,
+      `This website is published by ${site.name}, a law firm based in Onitsha, Anambra State, Nigeria. By using this website you accept these terms of use.`,
     ],
   },
   {

@@ -71,7 +71,7 @@ function InsightPage() {
         ? -1
         : b.category === article.category && a.category !== article.category
           ? 1
-          : b.date.localeCompare(a.date)
+          : b.date.localeCompare(a.date),
     )
     .slice(0, 2);
 

@@ -7,7 +7,13 @@ import { cn } from "@/lib/utils";
  * Never recolour to gold, never place on busy imagery, always keep clear
  * space around the mark.
  */
-export function Logo({ tone = "navy", className }: { tone?: "navy" | "white"; className?: string }) {
+export function Logo({
+  tone = "navy",
+  className,
+}: {
+  tone?: "navy" | "white";
+  className?: string;
+}) {
   return (
     <img
       src={logoNavy}

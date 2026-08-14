@@ -50,7 +50,9 @@ export function TextInput(props: InputHTMLAttributes<HTMLInputElement>) {
 }
 
 export function TextArea(props: TextareaHTMLAttributes<HTMLTextAreaElement>) {
-  return <textarea rows={6} {...props} className={cn(controlClasses, "resize-y", props.className)} />;
+  return (
+    <textarea rows={6} {...props} className={cn(controlClasses, "resize-y", props.className)} />
+  );
 }
 
 export function SelectInput({ children, ...props }: SelectHTMLAttributes<HTMLSelectElement>) {

@@ -14,7 +14,8 @@ const buttonVariants = cva(
         /** For dark bands where navy would disappear. */
         inverse: "bg-paper text-ink hover:bg-mist active:bg-mist",
         /** Gold outline — dark surfaces only. */
-        outlineGold: "border border-gold text-gold hover:bg-gold hover:text-navy-deep active:bg-gold",
+        outlineGold:
+          "border border-gold text-gold hover:bg-gold hover:text-navy-deep active:bg-gold",
         /** Secondary action on light surfaces. */
         outline: "border border-ink/30 text-ink hover:border-ink hover:bg-mist",
       },
@@ -24,7 +25,7 @@ const buttonVariants = cva(
       },
     },
     defaultVariants: { variant: "primary", size: "default" },
-  }
+  },
 );
 
 export function Button({
@@ -71,7 +72,7 @@ export function ArrowLink({
       className={cn(
         "group inline-flex items-center gap-2.5 font-sans text-[0.8125rem] font-medium uppercase tracking-[0.12em] transition-colors duration-200 ease-out",
         tone === "light" ? "text-gold-deep hover:text-ink" : "text-gold hover:text-paper",
-        className
+        className,
       )}
       {...props}
     >
@@ -80,7 +81,7 @@ export function ArrowLink({
           "underline underline-offset-8 transition-colors duration-200",
           tone === "light"
             ? "decoration-gold-deep/30 group-hover:decoration-ink"
-            : "decoration-gold/40 group-hover:decoration-paper"
+            : "decoration-gold/40 group-hover:decoration-paper",
         )}
       >
         {children}

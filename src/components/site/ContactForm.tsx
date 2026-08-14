@@ -46,21 +46,39 @@ function validate(values: FormState): FormErrors {
   return errors;
 }
 
+/** The enquiry as a mailto: link addressed to the firm's consultation inbox. */
+function mailtoHref(values: FormState): string {
+  const body = [
+    `Name: ${values.name}`,
+    `Email: ${values.email}`,
+    values.phone.trim() ? `Phone: ${values.phone}` : null,
+    `Practice area: ${values.practiceArea}`,
+    "",
+    values.message,
+  ]
+    .filter((line) => line !== null)
+    .join("\n");
+
+  const query = new URLSearchParams({
+    subject: values.subject || "Consultation request",
+    body,
+  });
+  return `mailto:${site.consultationEmail}?${query.toString().replace(/\+/g, "%20")}`;
+}
+
 export function ContactForm() {
   const [values, setValues] = useState<FormState>(initialState);
   const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState<Status>("idle");
 
-  const set =
-    (key: keyof FormState) =>
-    (event: { target: { value: string } }) => {
-      setValues((current) => ({ ...current, [key]: event.target.value }));
-      setErrors((current) => {
-        const next = { ...current };
-        delete next[key];
-        return next;
-      });
-    };
+  const set = (key: keyof FormState) => (event: { target: { value: string } }) => {
+    setValues((current) => ({ ...current, [key]: event.target.value }));
+    setErrors((current) => {
+      const next = { ...current };
+      delete next[key];
+      return next;
+    });
+  };
 
   const onSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -71,20 +89,42 @@ export function ContactForm() {
       return;
     }
     setStatus("submitting");
-    // Placeholder submit — there is no backend yet.
-    // TODO: wire this to the firm's intake endpoint when available.
-    window.setTimeout(() => setStatus("success"), 1200);
+    // There is no intake server. Rather than claim an enquiry was received when
+    // nothing was sent, hand the message to the visitor's own mail client
+    // addressed to the firm. Replace this with a real endpoint if one is added.
+    window.location.href = mailtoHref(values);
+    setStatus("success");
   };
 
   if (status === "success") {
     return (
       <div role="status" className="border border-rule bg-mist p-8 md:p-10">
         <CheckCircle2 className="size-8 text-gold-deep" aria-hidden="true" />
-        <h2 className="display-3 mt-5 text-ink">Thank you{values.name ? `, ${values.name.split(" ")[0]}` : ""}.</h2>
+        <h2 className="display-3 mt-5 text-ink">
+          Almost there{values.name ? `, ${values.name.split(" ")[0]}` : ""}.
+        </h2>
         <p className="measure mt-4 leading-relaxed text-ink-soft">
-          Your enquiry has been received. A member of our team will review it and respond within one
-          business day. If your matter is urgent, please call us on {site.phone}. Please do not send
-          confidential documents until we have confirmed that we can act.
+          Your email application should have opened with this enquiry ready to send to{" "}
+          {site.consultationEmail}.{" "}
+          <strong className="text-ink">It is not sent until you send it from there.</strong>
+        </p>
+        <p className="measure mt-4 leading-relaxed text-ink-soft">
+          If nothing opened, you can{" "}
+          <a
+            href={mailtoHref(values)}
+            className="text-gold-deep underline decoration-gold-deep/30 underline-offset-4 hover:text-ink"
+          >
+            open it again
+          </a>{" "}
+          or email us directly at{" "}
+          <a
+            href={`mailto:${site.consultationEmail}`}
+            className="break-all text-gold-deep underline decoration-gold-deep/30 underline-offset-4 hover:text-ink"
+          >
+            {site.consultationEmail}
+          </a>
+          . If your matter is urgent, please call {site.phone}. Please do not send confidential
+          documents until we have confirmed that we can act.
         </p>
         <Button
           variant="outline"
@@ -94,7 +134,7 @@ export function ContactForm() {
             setStatus("idle");
           }}
         >
-          Send another message
+          Start a new enquiry
         </Button>
       </div>
     );
@@ -141,7 +181,12 @@ export function ContactForm() {
             aria-describedby={errors.phone ? "contact-phone-error" : undefined}
           />
         </Field>
-        <Field label="Practice area" htmlFor="contact-practice-area" required error={errors.practiceArea}>
+        <Field
+          label="Practice area"
+          htmlFor="contact-practice-area"
+          required
+          error={errors.practiceArea}
+        >
           <SelectInput
             id="contact-practice-area"
             name="practiceArea"
