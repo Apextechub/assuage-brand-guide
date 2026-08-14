@@ -228,8 +228,15 @@ export function useAdminState(): { state: AdminState | null; error: string | nul
   return { state: snapshot, error: snapshot ? lastError : null };
 }
 
-export function todayISO(): string {
-  return new Date().toISOString().slice(0, 10);
+/**
+ * Today as yyyy-mm-dd in the editor's own timezone. Built from local parts, not
+ * `toISOString()`, which would report yesterday between midnight and 01:00 in
+ * WAT and later in timezones further east.
+ */
+export function todayISO(now: Date = new Date()): string {
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${now.getFullYear()}-${month}-${day}`;
 }
 
 export function emptyInsight(): InsightDraft {

@@ -50,10 +50,21 @@ export function estimateReadTime(text: string): string {
   return `${Math.max(1, Math.ceil(words / 200))} min read`;
 }
 
+/**
+ * True for a real calendar date, e.g. rejecting 2026-02-30.
+ *
+ * Compared through local date parts on purpose. Going via `toISOString()` would
+ * convert local midnight to UTC, which moves the date back a day for every
+ * timezone east of UTC — including WAT, where this site's editors are — and so
+ * rejected every date they typed.
+ */
 function isRealDate(iso: string): boolean {
   if (!ISO_DATE_PATTERN.test(iso)) return false;
-  const parsed = new Date(`${iso}T00:00:00`);
-  return !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0, 10) === iso;
+  const [year, month, day] = iso.split("-").map(Number) as [number, number, number];
+  const parsed = new Date(year, month - 1, day);
+  return (
+    parsed.getFullYear() === year && parsed.getMonth() === month - 1 && parsed.getDate() === day
+  );
 }
 
 /** Shared slug rules — same for both content types. */
