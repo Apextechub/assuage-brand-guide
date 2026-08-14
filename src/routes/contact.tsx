@@ -4,7 +4,7 @@ import { Container } from "@/components/site/Container";
 import { MicroLabel } from "@/components/site/MicroLabel";
 import { OfficeBlock } from "@/components/site/OfficeBlock";
 import { PageHeader } from "@/components/site/PageHeader";
-import { site } from "@/data/site";
+import { site, absoluteUrl } from "@/data/site";
 
 const description =
   "Contact Assuage Attorneys in Onitsha, Anambra State. Schedule a consultation to discuss your circumstances and the appropriate next steps.";
@@ -17,10 +17,10 @@ export const Route = createFileRoute("/contact")({
       { property: "og:title", content: "Contact — Assuage Attorneys" },
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/contact" },
+      { property: "og:url", content: absoluteUrl("/contact") },
       { name: "twitter:card", content: "summary" },
     ],
-    links: [{ rel: "canonical", href: "/contact" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/contact") }],
   }),
   component: ContactPage,
 });

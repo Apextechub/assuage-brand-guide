@@ -8,6 +8,7 @@ import { InsightCard } from "@/components/site/InsightCard";
 import { PageHeader } from "@/components/site/PageHeader";
 import { insightCategories, insights } from "@/data/insights";
 import { cn } from "@/lib/utils";
+import { absoluteUrl } from "@/data/site";
 
 const description =
   "Commentary and analysis from Assuage Attorneys on Nigerian corporate, commercial, family, property and dispute resolution law.";
@@ -20,10 +21,10 @@ export const Route = createFileRoute("/insights/")({
       { property: "og:title", content: "Insights — Assuage Attorneys" },
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/insights" },
+      { property: "og:url", content: absoluteUrl("/insights") },
       { name: "twitter:card", content: "summary" },
     ],
-    links: [{ rel: "canonical", href: "/insights" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/insights") }],
   }),
   component: InsightsPage,
 });

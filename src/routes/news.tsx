@@ -3,6 +3,7 @@ import { ClosingBand } from "@/components/site/ClosingBand";
 import { Container } from "@/components/site/Container";
 import { PageHeader } from "@/components/site/PageHeader";
 import { formatNewsDate, news } from "@/data/news";
+import { absoluteUrl } from "@/data/site";
 
 const description =
   "News and announcements from Assuage Attorneys, a law firm in Onitsha, Anambra State.";
@@ -15,10 +16,10 @@ export const Route = createFileRoute("/news")({
       { property: "og:title", content: "Firm News — Assuage Attorneys" },
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/news" },
+      { property: "og:url", content: absoluteUrl("/news") },
       { name: "twitter:card", content: "summary" },
     ],
-    links: [{ rel: "canonical", href: "/news" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/news") }],
   }),
   component: NewsPage,
 });

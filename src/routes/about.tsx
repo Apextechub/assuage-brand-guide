@@ -4,6 +4,7 @@ import { Container } from "@/components/site/Container";
 import { MicroLabel } from "@/components/site/MicroLabel";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Reveal } from "@/components/site/Reveal";
+import { absoluteUrl } from "@/data/site";
 
 const description =
   "The story, philosophy and approach of Assuage Attorneys, a Nigerian law firm based in Onitsha, Anambra State.";
@@ -35,10 +36,10 @@ export const Route = createFileRoute("/about")({
       { property: "og:title", content: "About Us - Assuage Attorneys" },
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/about" },
+      { property: "og:url", content: absoluteUrl("/about") },
       { name: "twitter:card", content: "summary" },
     ],
-    links: [{ rel: "canonical", href: "/about" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/about") }],
   }),
   component: AboutPage,
 });

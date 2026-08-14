@@ -14,6 +14,12 @@ export interface NavItem {
 export const site = {
   name: "Assuage Attorneys",
   legalName: "Assuage Attorneys",
+  /**
+   * Canonical origin, no trailing slash. Canonical links and og:url must be
+   * absolute or search engines and social previews resolve them against
+   * whatever host served the page.
+   */
+  url: "https://assuageattorneys.com",
   tagline: "Addressing legal concerns with ease.",
   description:
     "Assuage Attorneys is a Nigerian law firm based in Onitsha, Anambra State, providing legal services to individuals, families, entrepreneurs, companies and organisations.",
@@ -54,4 +60,9 @@ export function yearsInPractice(now: Date = new Date()): number {
   let years = now.getFullYear() - founding.getFullYear();
   if (now.getMonth() < founding.getMonth()) years -= 1;
   return Math.max(0, years);
+}
+
+/** Absolute URL for a site-relative path, e.g. "/insights" or "/insights/x". */
+export function absoluteUrl(path: string): string {
+  return path.startsWith("/") ? `${site.url}${path}` : `${site.url}/${path}`;
 }

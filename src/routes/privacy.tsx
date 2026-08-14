@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Container } from "@/components/site/Container";
 import { PageHeader } from "@/components/site/PageHeader";
-import { site } from "@/data/site";
+import { site, absoluteUrl } from "@/data/site";
 
 // TODO: this is generic placeholder text, not reviewed privacy advice.
 // Have the firm's compliance adviser approve final wording before launch.
@@ -58,10 +58,10 @@ export const Route = createFileRoute("/privacy")({
         content: "How Assuage Attorneys collects, uses and protects personal data.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/privacy" },
+      { property: "og:url", content: absoluteUrl("/privacy") },
       { name: "twitter:card", content: "summary" },
     ],
-    links: [{ rel: "canonical", href: "/privacy" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/privacy") }],
   }),
   component: PrivacyPage,
 });

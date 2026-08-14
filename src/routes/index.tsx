@@ -10,7 +10,7 @@ import { StatStrip } from "@/components/site/StatStrip";
 import { TeamCard } from "@/components/site/TeamCard";
 import { insights } from "@/data/insights";
 import { practiceAreas } from "@/data/practiceAreas";
-import { site } from "@/data/site";
+import { site, absoluteUrl } from "@/data/site";
 import { team } from "@/data/team";
 
 const description =
@@ -24,10 +24,10 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Assuage Attorneys - Law Firm in Onitsha, Nigeria" },
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/" },
+      { property: "og:url", content: absoluteUrl("/") },
       { name: "twitter:card", content: "summary" },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/") }],
     scripts: [
       {
         type: "application/ld+json",

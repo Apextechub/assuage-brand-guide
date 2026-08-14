@@ -7,6 +7,7 @@ import { TeamCard } from "@/components/site/TeamCard";
 import { practiceAreas } from "@/data/practiceAreas";
 import { team } from "@/data/team";
 import { cn } from "@/lib/utils";
+import { absoluteUrl } from "@/data/site";
 
 const description =
   "The partners and associates of Assuage Attorneys, a law firm in Onitsha, Anambra State.";
@@ -19,10 +20,10 @@ export const Route = createFileRoute("/team/")({
       { property: "og:title", content: "Our People — Assuage Attorneys" },
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/team" },
+      { property: "og:url", content: absoluteUrl("/team") },
       { name: "twitter:card", content: "summary" },
     ],
-    links: [{ rel: "canonical", href: "/team" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/team") }],
   }),
   component: TeamPage,
 });

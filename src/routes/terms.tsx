@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Container } from "@/components/site/Container";
 import { PageHeader } from "@/components/site/PageHeader";
-import { site } from "@/data/site";
+import { site, absoluteUrl } from "@/data/site";
 
 // TODO: placeholder terms for layout only. Have the firm approve final
 // wording before launch.
@@ -58,10 +58,10 @@ export const Route = createFileRoute("/terms")({
         content: "The terms that govern use of the Assuage Attorneys website.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/terms" },
+      { property: "og:url", content: absoluteUrl("/terms") },
       { name: "twitter:card", content: "summary" },
     ],
-    links: [{ rel: "canonical", href: "/terms" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/terms") }],
   }),
   component: TermsPage,
 });

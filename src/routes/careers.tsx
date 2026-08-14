@@ -6,6 +6,7 @@ import { MicroLabel } from "@/components/site/MicroLabel";
 import { PageHeader } from "@/components/site/PageHeader";
 import { careersCopy, openRoles } from "@/data/careers";
 import { formatNewsDate } from "@/data/news";
+import { absoluteUrl } from "@/data/site";
 
 const description =
   "Careers at Assuage Attorneys: current vacancies and graduate opportunities at a law firm in Onitsha, Anambra State.";
@@ -18,10 +19,10 @@ export const Route = createFileRoute("/careers")({
       { property: "og:title", content: "Careers — Assuage Attorneys" },
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/careers" },
+      { property: "og:url", content: absoluteUrl("/careers") },
       { name: "twitter:card", content: "summary" },
     ],
-    links: [{ rel: "canonical", href: "/careers" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/careers") }],
   }),
   component: CareersPage,
 });

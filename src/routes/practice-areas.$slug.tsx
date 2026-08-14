@@ -6,6 +6,7 @@ import { PageHeader } from "@/components/site/PageHeader";
 import { TeamCard } from "@/components/site/TeamCard";
 import { getPracticeArea } from "@/data/practiceAreas";
 import { team } from "@/data/team";
+import { absoluteUrl } from "@/data/site";
 
 export const Route = createFileRoute("/practice-areas/$slug")({
   loader: ({ params }) => {
@@ -23,10 +24,10 @@ export const Route = createFileRoute("/practice-areas/$slug")({
       },
       { property: "og:description", content: loaderData?.summary ?? "" },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: `/practice-areas/${loaderData?.slug ?? ""}` },
+      { property: "og:url", content: absoluteUrl(`/practice-areas/${loaderData?.slug ?? ""}`) },
       { name: "twitter:card", content: "summary" },
     ],
-    links: [{ rel: "canonical", href: `/practice-areas/${loaderData?.slug ?? ""}` }],
+    links: [{ rel: "canonical", href: absoluteUrl(`/practice-areas/${loaderData?.slug ?? ""}`) }],
   }),
   component: PracticeAreaPage,
 });

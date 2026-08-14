@@ -5,7 +5,7 @@ import { Container } from "@/components/site/Container";
 import { MicroLabel } from "@/components/site/MicroLabel";
 import { Portrait } from "@/components/site/Portrait";
 import { practiceAreas } from "@/data/practiceAreas";
-import { site } from "@/data/site";
+import { site, absoluteUrl } from "@/data/site";
 import { getTeamMember } from "@/data/team";
 
 export const Route = createFileRoute("/team/$slug")({
@@ -28,10 +28,10 @@ export const Route = createFileRoute("/team/$slug")({
         },
         { property: "og:description", content: description },
         { property: "og:type", content: "profile" },
-        { property: "og:url", content: `/team/${loaderData?.slug ?? ""}` },
+        { property: "og:url", content: absoluteUrl(`/team/${loaderData?.slug ?? ""}`) },
         { name: "twitter:card", content: "summary" },
       ],
-      links: [{ rel: "canonical", href: `/team/${loaderData?.slug ?? ""}` }],
+      links: [{ rel: "canonical", href: absoluteUrl(`/team/${loaderData?.slug ?? ""}`) }],
     };
   },
   component: TeamMemberPage,

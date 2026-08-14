@@ -6,6 +6,7 @@ import { Container } from "@/components/site/Container";
 import { MicroLabel } from "@/components/site/MicroLabel";
 import { formatInsightDate, getInsight, insights, type ContentBlock } from "@/data/insights";
 import { getTeamMember } from "@/data/team";
+import { absoluteUrl } from "@/data/site";
 
 export const Route = createFileRoute("/insights/$slug")({
   loader: ({ params }) => {
@@ -20,10 +21,10 @@ export const Route = createFileRoute("/insights/$slug")({
       { property: "og:title", content: loaderData?.title ?? "Insight" },
       { property: "og:description", content: loaderData?.excerpt ?? "" },
       { property: "og:type", content: "article" },
-      { property: "og:url", content: `/insights/${loaderData?.slug ?? ""}` },
+      { property: "og:url", content: absoluteUrl(`/insights/${loaderData?.slug ?? ""}`) },
       { name: "twitter:card", content: "summary" },
     ],
-    links: [{ rel: "canonical", href: `/insights/${loaderData?.slug ?? ""}` }],
+    links: [{ rel: "canonical", href: absoluteUrl(`/insights/${loaderData?.slug ?? ""}`) }],
     scripts: loaderData
       ? [
           {
