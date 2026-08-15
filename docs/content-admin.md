@@ -105,10 +105,17 @@ Also commit `package-lock.json` if it is not already tracked, so builds are
 reproducible. The workflow falls back to `npm install` without it, but pinned
 dependencies are worth having.
 
-**Publish from one place.** Once this workflow is live, both it and Lovable's
-own deploy button target the same Worker. Deploy through Actions and leave the
-Lovable button alone, or the two will overwrite each other. Editing in the
-Lovable editor still works — that is only git sync.
+**One live site, one deploy path.** This workflow is the only thing that should
+deploy the site. Lovable, if the project is still connected there, deploys its
+own copy to its own hosting from the same repository — a second site that looks
+right, drifts out of date, and confuses debugging. Disconnect it, or at least
+stop its deploys. Editing in the Lovable editor is only git sync and is
+unaffected.
+
+The same applies to any Worker left behind in another Cloudflare account: it
+keeps serving stale content *and* a working `/admin` with its own copy of the
+secrets. Delete Workers you have stopped deploying to rather than leaving them
+running.
 
 ### Checking it worked
 

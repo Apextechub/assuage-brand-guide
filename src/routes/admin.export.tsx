@@ -407,7 +407,7 @@ function PublishOutcome({ phase }: { phase: Phase }) {
           Your changes are saved and the site is rebuilding now. Give it a minute or two, then
           refresh the live page to see them.
         </p>
-        <p className="mt-2">
+        {/* <p className="mt-2">
           <a
             href={result.url}
             target="_blank"
@@ -418,7 +418,7 @@ function PublishOutcome({ phase }: { phase: Phase }) {
             <ExternalLink className="size-3.5" aria-hidden="true" />
           </a>
         </p>
-      </Notice>
+      </Notice> */}
     </div>
   );
 }
