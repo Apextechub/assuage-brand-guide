@@ -2,5 +2,14 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "assuage-attorneys",
   "compatibility_date": "2026-08-11",
-  "compatibility_flags": ["nodejs_compat"]
+  "compatibility_flags": ["nodejs_compat"],
+  // Declaring routes turns the workers.dev address off by default. Keep it on
+  // as a fallback while the domain propagates and as a way in if DNS ever
+  // breaks — the admin lives behind this Worker too. Set to false once
+  // assuageattorneys.com is serving and the firm wants a single hostname.
+  "workers_dev": true,
+  "routes": [
+    { "pattern": "assuageattorneys.com", "custom_domain": true },
+    { "pattern": "www.assuageattorneys.com", "custom_domain": true }
+  ]
 }
