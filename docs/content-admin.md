@@ -22,7 +22,7 @@ ordinary commit — reviewable, revertable, and attributable.
 ## One-time setup
 
 Four steps. You need admin access to the GitHub repository and to the Cloudflare
-account that hosts the Worker (`apextechub-assuage-brand-guide`).
+account that hosts the Worker (`assuage-attorneys`).
 
 ### 1. Choose the admin password
 
@@ -42,7 +42,7 @@ GitHub → Settings → Developer settings → **Fine-grained personal access to
 
 | Field | Value |
 | --- | --- |
-| Repository access | Only select repositories → `Apextechub/assuage-brand-guide` |
+| Repository access | Only select repositories → `assuageattorneys/assuage-brand-guide` |
 | Permissions → Contents | **Read and write** |
 | Expiration | Your choice — publishing stops working the day it expires |
 
@@ -88,7 +88,7 @@ node -e "console.log(crypto.randomUUID()+crypto.randomUUID())"
 ```
 
 Optional overrides, only if you move the repository or branch:
-`PUBLISH_REPO` (default `Apextechub/assuage-brand-guide`), `PUBLISH_BRANCH`
+`PUBLISH_REPO` (default `assuageattorneys/assuage-brand-guide`), `PUBLISH_BRANCH`
 (default `main`), `PUBLISH_AUTHOR_NAME`, `PUBLISH_AUTHOR_EMAIL`.
 
 ### 4. Let GitHub Actions deploy

@@ -20,7 +20,7 @@ ADMIN_PASSWORD_HASH=''
 GITHUB_TOKEN=''
 
 # Optional — these default to this repository and branch.
-# PUBLISH_REPO=Apextechub/assuage-brand-guide
+# PUBLISH_REPO=assuageattorneys/assuage-brand-guide
 # PUBLISH_BRANCH=main
 # PUBLISH_AUTHOR_NAME=Assuage content admin
 # PUBLISH_AUTHOR_EMAIL=noreply@users.noreply.github.com

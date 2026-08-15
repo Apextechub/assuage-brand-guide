@@ -39,7 +39,7 @@ function read(name: string): string {
 }
 
 /** Defaults matching this repository, overridable by env. */
-const DEFAULT_REPO = "Apextechub/assuage-brand-guide";
+const DEFAULT_REPO = "assuageattorneys/assuage-brand-guide";
 const DEFAULT_BRANCH = "main";
 
 /**
