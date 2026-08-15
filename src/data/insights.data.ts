@@ -4,23 +4,7 @@
 
 import type { Insight } from "./insights.types";
 
-import corporateCama from "@/assets/insights/corporate-cama.jpg";
-
 export const insights: Insight[] = [
-  {
-    slug: "the-nigerian-act-of-law",
-    title: "The Nigerian Act of law",
-    category: "Dispute Resolution",
-    date: "2026-08-15",
-    readTime: "1 min read",
-    excerpt: "A short read",
-    author: "adaora-cynthia-udenze",
-    image: corporateCama,
-    imageAlt: "This is an image",
-    content: [
-      { type: "p", text: "This is a test" },
-    ],
-  },
   {
     slug: "the-legality-of-no-refund-policy-under-nigerian-consumer-protection-law",
     title: "THE LEGALITY OF NO REFUND POLICY UNDER NIGERIAN CONSUMER PROTECTION LAW",
