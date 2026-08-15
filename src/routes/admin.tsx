@@ -5,7 +5,7 @@ import { Button } from "@/components/site/Button";
 import { Field, TextInput } from "@/components/site/Field";
 import { Logo } from "@/components/site/Logo";
 import { getAdminSession, login } from "@/lib/admin/api";
-import { isModified, useAdminState } from "@/lib/admin/store";
+import { pendingChangeCount, useAdminState } from "@/lib/admin/store";
 
 export const Route = createFileRoute("/admin")({
   // The session is checked on the server on every entry to /admin, so the
@@ -28,7 +28,7 @@ function AdminLayout() {
   if (!session.publishing.ready) return <SetupNeeded missing={session.publishing.missing} />;
   if (!session.authenticated) return <SignIn />;
 
-  const pending = state ? [...state.insights, ...state.news].filter(isModified).length : 0;
+  const pending = state ? pendingChangeCount(state) : 0;
 
   return (
     <div className="min-h-screen bg-paper">

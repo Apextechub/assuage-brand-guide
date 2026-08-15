@@ -11,7 +11,7 @@ import {
 import { ActionButton } from "@/components/admin/FileOutput";
 import { formatInsightDate } from "@/data/insights";
 import { getTeamMember } from "@/data/team";
-import { actions, isModified, useAdminState } from "@/lib/admin/store";
+import { actions, isModified, pendingChangeCount, useAdminState } from "@/lib/admin/store";
 import type { AnyDraft, InsightDraft, NewsDraft } from "@/lib/admin/types";
 import { validateDraft } from "@/lib/admin/validate";
 import { cn } from "@/lib/utils";
@@ -31,7 +31,8 @@ function AdminDashboard() {
   const items: AnyDraft[] = tab === "insights" ? state.insights : state.news;
   const siblings = items;
   const sorted = [...items].sort((a, b) => b.date.localeCompare(a.date));
-  const changed = [...state.insights, ...state.news].filter(isModified).length;
+  // Deletions count too: they are pending publishes with no row left to show.
+  const changed = pendingChangeCount(state);
 
   return (
     <AdminContainer className="py-12 md:py-16">

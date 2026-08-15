@@ -77,7 +77,11 @@ function sourceNewsDrafts(): NewsDraft[] {
  * with has not been touched here, so the committed version wins. Otherwise the
  * local edits win, and `conflictWithSource` records that the file also moved.
  */
-function reconcile<T extends AnyDraft>(source: T[], stored: T[]): T[] {
+function reconcile<T extends AnyDraft>(
+  source: T[],
+  stored: T[],
+  deleted: ReadonlySet<string>,
+): T[] {
   const storedById = new Map(stored.map((draft) => [draft.id, draft]));
   const storedBySlug = new Map(
     stored.filter((draft) => draft.origin === "source").map((draft) => [draft.slug, draft]),
@@ -86,6 +90,10 @@ function reconcile<T extends AnyDraft>(source: T[], stored: T[]): T[] {
   const result: T[] = [];
 
   for (const incoming of source) {
+    // Deleted here and not yet published: leave it out, or reloading the page
+    // would bring it back from the data file.
+    if (deleted.has(incoming.id)) continue;
+
     // Match on id first; fall back to slug, which covers an item whose slug was
     // renamed here and has since been exported and committed under the new one.
     const local = storedById.get(incoming.id) ?? storedBySlug.get(incoming.slug);
@@ -144,10 +152,18 @@ function loadState(): AdminState {
   }
   if (!stored) return seeded;
 
+  // A tombstone is spent once the item is gone from the data file: the deletion
+  // has been published, so keeping it would suppress a future article that
+  // happened to reuse the slug.
+  const stillCommitted = new Set([...seeded.insights, ...seeded.news].map((d) => d.id));
+  const deleted = (stored.deleted ?? []).filter((id) => stillCommitted.has(id));
+  const tombstones = new Set(deleted);
+
   return {
     version: ADMIN_STATE_VERSION,
-    insights: reconcile(seeded.insights, stored.insights ?? []),
-    news: reconcile(seeded.news, stored.news ?? []),
+    insights: reconcile(seeded.insights, stored.insights ?? [], tombstones),
+    news: reconcile(seeded.news, stored.news ?? [], tombstones),
+    deleted,
   };
 }
 
@@ -204,6 +220,19 @@ function mutate(update: (current: AdminState) => AdminState): void {
   if (state === null) ensureLoaded();
   if (state === null) return;
   persist(update(state));
+}
+
+/**
+ * Record a deletion when the item exists in the committed data file. Items
+ * created in this browser have nothing to come back from, so they need no
+ * tombstone.
+ */
+function withTombstone(current: AdminState, id: string): string[] {
+  const existing = current.deleted ?? [];
+  if (existing.includes(id)) return existing;
+  const draft = [...current.insights, ...current.news].find((item) => item.id === id);
+  if (!draft || draft.origin !== "source") return existing;
+  return [...existing, id];
 }
 
 function stamp<T extends AnyDraft>(draft: T): T {
@@ -307,11 +336,16 @@ export const actions = {
     mutate((current) => ({
       ...current,
       insights: current.insights.filter((item) => item.id !== id),
+      deleted: withTombstone(current, id),
     }));
   },
 
   removeNews(id: string): void {
-    mutate((current) => ({ ...current, news: current.news.filter((item) => item.id !== id) }));
+    mutate((current) => ({
+      ...current,
+      news: current.news.filter((item) => item.id !== id),
+      deleted: withTombstone(current, id),
+    }));
   },
 
   setInsightStatus(id: string, status: InsightDraft["status"]): void {
@@ -364,5 +398,13 @@ export function isModified(draft: AnyDraft): boolean {
 
 /** True when anything at all differs from what is committed. */
 export function hasPendingChanges(state: AdminState): boolean {
+  if ((state.deleted ?? []).length > 0) return true;
   return [...state.insights, ...state.news].some(isModified);
+}
+
+/** How many changes are waiting to be published, deletions included. */
+export function pendingChangeCount(state: AdminState): number {
+  return (
+    [...state.insights, ...state.news].filter(isModified).length + (state.deleted ?? []).length
+  );
 }

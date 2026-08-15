@@ -69,6 +69,14 @@ export interface AdminState {
   version: number;
   insights: InsightDraft[];
   news: NewsDraft[];
+  /**
+   * Ids of committed items the editor has deleted but not yet published.
+   *
+   * Without this, a deletion cannot be distinguished from an item that has just
+   * appeared in the data file, and reloading the page would reinstate it.
+   * Tombstones are dropped once the deletion reaches the data file.
+   */
+  deleted?: string[];
 }
 
 export const ADMIN_STATE_VERSION = 1;
