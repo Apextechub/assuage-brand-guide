@@ -4,8 +4,8 @@
 # this branch, which triggers this workflow, which puts the change live. Without
 # it, publishing would only reach the repository.
 #
-# Required secrets, on the "Assuage" environment
-# (Settings → Environments → Assuage → Environment secrets):
+# Required secrets, on the "Assuage1" environment
+# (Settings → Environments → Assuage1 → Environment secrets):
 #   CLOUDFLARE_API_TOKEN   token with the "Edit Cloudflare Workers" template
 #   CLOUDFLARE_ACCOUNT_ID  from the Cloudflare dashboard URL or Workers overview
 #
@@ -35,10 +35,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     # CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID are environment secrets,
-    # not repository secrets. Without naming the environment here they resolve
-    # to empty and the deploy step fails with "necessary to set a
-    # CLOUDFLARE_API_TOKEN environment variable".
-    environment: Assuage
+    # not repository secrets. This name must match the environment in
+    # Settings → Environments exactly — GitHub silently creates a new, empty
+    # environment when it does not, and every secret then resolves to empty
+    # with "necessary to set a CLOUDFLARE_API_TOKEN environment variable".
+    environment: Assuage1
     permissions:
       contents: read
 
