@@ -34,8 +34,24 @@ export class ConfigError extends Error {
   }
 }
 
+/**
+ * Read a secret, forgiving the two ways they get pasted wrong.
+ *
+ * `.dev.vars` stores values quoted (the password hash contains `$`, which the
+ * shell would otherwise expand), so copying a line out of it and into
+ * `wrangler secret put` carries the quotes — and sometimes the `NAME=` prefix —
+ * into the stored value. Both produce a secret that is right apart from its
+ * wrapping, and an error message that reads as though the value itself is
+ * wrong. Strip them rather than making an operator debug it.
+ */
 function read(name: string): string {
-  return (process.env[name] ?? "").trim();
+  let value = (process.env[name] ?? "").trim();
+  if (value.startsWith(`${name}=`)) value = value.slice(name.length + 1).trim();
+  const quote = value[0];
+  if ((quote === '"' || quote === "'") && value.endsWith(quote) && value.length > 1) {
+    value = value.slice(1, -1).trim();
+  }
+  return value;
 }
 
 /** Defaults matching this repository, overridable by env. */
