@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
-import { CloudUpload, Download, ExternalLink, Image as ImageIcon, Upload } from "lucide-react";
+import { CloudUpload, Download, Image as ImageIcon, Upload } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
 import {
   AdminContainer,
@@ -407,18 +407,7 @@ function PublishOutcome({ phase }: { phase: Phase }) {
           Your changes are saved and the site is rebuilding now. Give it a minute or two, then
           refresh the live page to see them.
         </p>
-        {/* <p className="mt-2">
-          <a
-            href={result.url}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-1.5 text-gold-deep underline underline-offset-4"
-          >
-            View the record of this change
-            <ExternalLink className="size-3.5" aria-hidden="true" />
-          </a>
-        </p>
-      </Notice> */}
+      </Notice>
     </div>
   );
 }
