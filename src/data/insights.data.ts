@@ -4,7 +4,26 @@
 
 import type { Insight } from "./insights.types";
 
+import arbitration from "@/assets/insights/arbitration.jpg";
+
 export const insights: Insight[] = [
+  {
+    slug: "thoughts-on-the-mr-p-saga",
+    title: "Thoughts on the Mr P Saga ",
+    category: "Dispute Resolution",
+    date: "2026-08-17",
+    readTime: "1 min read",
+    excerpt: "A legal oversight on the Mr P and Psquare matter.",
+    author: "nwokemba-gift",
+    image: arbitration,
+    imageAlt: "Image of a what Im saying ",
+    content: [
+      { type: "h2", text: "1)The consumer has a right to full refund" },
+      { type: "p", text: "Under section 122, in addition to the consumer’s existing right to return unsafe or defective goods, a consumer may return goods and receive a full refund where, among other circumstances: ● The goods were intended to satisfy a particular purpose communicated to the supplier, but are found within a reasonable time after delivery to be unsuitable for that purpose. OR ● The consumer did not have an opportunity to examine the goods before delivery and rejects them within a reasonable time because they do not correspond with the description or sample, or are not of the type and quality reasonably contemplated by the sales agreement. For instance (cases of what I ordered versus what I got)" },
+      { type: "quote", text: "Section 5 of the legal state" },
+      { type: "p", text: "" },
+    ],
+  },
   {
     slug: "the-legality-of-no-refund-policy-under-nigerian-consumer-protection-law",
     title: "THE LEGALITY OF NO REFUND POLICY UNDER NIGERIAN CONSUMER PROTECTION LAW",
